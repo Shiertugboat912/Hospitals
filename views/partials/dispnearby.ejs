@@ -1,0 +1,43 @@
+<% if(result.length){ for(i=0;i < result.length ; i++){ var a =
+result[i].Latitude; var b = result[i].Longitude; var c = result[i].Name; var
+totbed = result[i].Total_Beds; var avbed = result[i].Avaiable_Beds; %>
+<script src="js/dispnearby.js"></script>
+<script>
+  getLocation();
+  function getLocation() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(showPosition);
+    } else {
+      alert("no gps");
+    }
+  }
+
+  function showPosition(position) {
+    var d = dist(
+      position.coords.latitude,
+      "<%=a%>",
+      position.coords.longitude,
+      "<%=b%>"
+    );
+
+    if (d < 10) {
+      display("<%=a%>", "<%=b%>", "<%=c%>", d);
+      card("<%=c%>", "Unknown", "<%=totbed%>", "<%=avbed%>");
+      return;
+    }
+  }
+</script>
+<%}}%>
+<div id="new1">
+  <div id="new" class="row"></div>
+</div>
+<style>
+  #new1 {
+    width: 100%;
+    background: whitesmoke;
+    padding: 10px;
+  }
+  .col-sm-6 {
+    padding-bottom: 10px;
+  }
+</style>

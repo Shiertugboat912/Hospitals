@@ -1,0 +1,160 @@
+getCoordinates();
+  // mark users location
+  // Step 1: Get user coordinates
+  function getCoordinates() {
+    var options = {
+      enableHighAccuracy: true,
+      timeout: 5000,
+      maximumAge: 0
+    };
+
+    function success(pos) {
+      var crd = pos.coords;
+      var lat = crd.latitude.toString();
+      var lng = crd.longitude.toString();
+      var coordinates = [lat, lng];
+      getCity(coordinates);
+      return;
+    }
+
+    function error(err) {
+      console.warn(`ERROR(${err.code}): ${err.message}`);
+    }
+
+    navigator.geolocation.getCurrentPosition(success, error, options);
+  }
+
+  // Step 2: Get city name
+  function getCity(coordinates) {
+    var xhr = new XMLHttpRequest();
+    var lat = coordinates[0];
+    var lng = coordinates[1];
+
+    // Paste your LocationIQ token below.
+    xhr.open(
+      "GET",
+      "https://eu1.locationiq.com/v1/reverse.php?key=f7f3cd67e34514&lat=" +
+        lat +
+        "&lon=" +
+        lng +
+        "&format=json",
+      true
+    );
+    xhr.send();
+    xhr.onreadystatechange = processRequest;
+    xhr.addEventListener("readystatechange", processRequest, false);
+
+    function processRequest(e) {
+      if (xhr.readyState == 4 && xhr.status == 200) {
+        var response = JSON.parse(xhr.responseText);
+        var city = response.address.city;
+        var el = document.createElement("div");
+        el.className = "marker";
+        el.style.backgroundImage = "url(icon.png)";
+        el.style.width = "48px";
+        el.style.height = "48px";
+        el.style.objectFit = "cover";
+        //Instead of this click listener, we can attach a popup / infowindow to this marker (see next section)
+        el.addEventListener("click", function() {
+          window.alert(response.display_name);
+        });
+        // add marker to map
+        new mapboxgl.Marker(el)
+          .setLngLat([response.lon, response.lat])
+          .addTo(map);
+        return;
+      }
+    }
+  }
+  //users location ends
+
+
+
+   // on search add hospital marker
+  function postmarker() {
+    var options = {
+      enableHighAccuracy: true,
+      timeout: 5000,
+      maximumAge: 0
+    };
+
+    var hosp = document.getElementById("searchhosp").value;
+
+    var xhr = new XMLHttpRequest();
+
+    xhr.open(
+      "GET",
+      "https://eu1.locationiq.com/v1/search.php?key=f7f3cd67e34514&q=" +
+        hosp +
+        "&type=hospital&country=in&format=json&limit=1",
+      true
+    );
+    xhr.send();
+    xhr.onreadystatechange = processRequest;
+    xhr.addEventListener("readystatechange", processRequest, false);
+
+    function processRequest(e) {
+      if (xhr.readyState == 4 && xhr.status == 200) {
+        var response = JSON.parse(xhr.responseText);
+        if (response[0].type == "hospital") {
+          addMarker(
+            response[0].lon,
+            response[0].lat,
+            response[0].display_name,
+            "unknowm"
+          );
+          return;
+        }
+      }
+    }
+  }
+  // ends
+
+
+  /* get_nearby();
+
+  //get nearby hospitals
+  function get_nearby() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(showPosition);
+    } else {
+      alert(
+        "Geolocation is not supported by this browser please enter your location"
+      );
+    }
+  }
+  function showPosition(position) {
+    var options = {
+      enableHighAccuracy: true,
+      timeout: 5000,
+      maximumAge: 0
+    };
+    var xhr = new XMLHttpRequest();
+
+    xhr.open(
+      "GET",
+      "https://eu1.locationiq.com/v1/nearby.php?key=f7f3cd67e34514&q&lat=" +
+        position.coords.latitude +
+        "&lon=" +
+        position.coords.longitude +
+        "&tag=POI&radius=10000&tag=hospital&format=json&limit=10",
+      true
+    );
+    xhr.send();
+    xhr.onreadystatechange = processRequest;
+    xhr.addEventListener("readystatechange", processRequest, false);
+    function processRequest(e) {
+      if (xhr.readyState == 4 && xhr.status == 200) {
+        var response = JSON.parse(xhr.responseText);
+        for (i = 0; i < response.length; i++)
+          addMarker(
+            response[i].lon,
+            response[i].lat,
+            response[i].name,
+            response[i].distance
+          );
+        return;
+      }
+    }
+  }
+ */
