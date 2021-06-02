@@ -139,7 +139,7 @@ var certificate = fs.readFileSync(
 ); */
 
 //start server
-app.listen(process.env.PORT || 3000, () => console.log(console.log("on")));
+app.listen(process.env.PORT || 3000, () => console.log("on"));
 
 /* https
   .createServer(
