@@ -139,9 +139,7 @@ var certificate = fs.readFileSync(
 ); */
 
 //start server
-app.listen(port, () =>
-  console.log(`Example app listening at http://localhost:${port}`)
-);
+app.listen(process.env.PORT || 3000, () => console.log(console.log("on")));
 
 /* https
   .createServer(
