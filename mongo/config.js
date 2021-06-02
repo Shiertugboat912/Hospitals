@@ -4,9 +4,7 @@ dotenv.config();
 
 mongoose.Promise = global.Promise;
 let url =
-  "mongodb+srv://admin:" +
-  process.env.MONGO +
-  "@cluster0.t9arp.mongodb.net/Hospital?retryWrites=true&w=majority";
+  "mongodb+srv://admin:admin_password@cluster0.t9arp.mongodb.net/Hospital?retryWrites=true&w=majority";
 
 const db = {};
 db.mongoose = mongoose;
