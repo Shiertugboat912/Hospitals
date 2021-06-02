@@ -1,9 +1,36 @@
 <html>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script>
+    function authenticate() {
+      console.log("here");
+      var name = document.getElementById("exampleInputEmail1").value;
+      var code = document.getElementById("code").value;
+      var pass = document.getElementById("exampleInputPassword1").value;
+      console.log(name, code, pass);
+      axios({
+        method: "post",
+        url: "/main/authenticate",
+        data: {
+          username: name,
+          code: code,
+          password: pass,
+        },
+      })
+        .then((answer) => {
+          console.log(answer);
+          window.localStorage.setItem(
+            "auth-token",
+            answer.headers["auth-token"]
+          );
+        })
+        .catch((err) => console.log(err));
+    }
+  </script>
   <body>
     <%- include('partials/navbar.ejs') %>
 
     <br /><br /><br /><br />
-    <form id="form1" method="POST" action="/authenticate">
+    <form id="form1" method="POST" action="/hospital_login/authenticate">
       <% if(error.length){%>
       <div class="alert-error"><%=error%></div>
       <%}%>

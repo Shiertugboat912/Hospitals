@@ -36,13 +36,13 @@
         >
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="/About">About</a>
+        <a class="nav-link" href="/about">About</a>
       </li>
       <li><a class="nav-link" href="/hospital_list">List of Hospitals</a></li>
       <li><a class="nav-link" href="/hospital_login"><%=name%></a></li>
       <% if(a== "True"){%>
-      <form method="POST" action="/logout">
-        <button style="border:none; background: none;" class="nav-link">
+      <form method="POST" action="/hospital_login/logout">
+        <button style="border: none; background: none" class="nav-link">
           Logout
         </button>
       </form>

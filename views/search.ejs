@@ -2,9 +2,9 @@
   <body>
     <%- include('partials/navbar.ejs') %><br /><br />
     <%- include('partials/maps.ejs')%> <% if(result.length){for(i=0;i <
-    result.length ; i++){ var a = result[i].Latitude; var b =
-    result[i].Longitude; var c = result[i].Name; var totbed =
-    result[i].Total_Beds; var avbed = result[i].Avaiable_Beds; %>
+    result.length ; i++){ var a = result[i].lat; var b = result[i].lon; var c =
+    result[i].name; var totbed = result[i].Total_Beds; var avbed =
+    result[i].Available_Beds; %>
     <script src="js/dispnearby.js"></script>
     <script>
       getLocation();
@@ -35,7 +35,7 @@
     </div>
 
     <%}}else{%>
-    <div style="text-align: center; padding: 20px; height: 30%;">
+    <div style="text-align: center; padding: 20px; height: 30%">
       <h1>No result</h1>
     </div>
 

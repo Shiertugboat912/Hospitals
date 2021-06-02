@@ -1,0 +1,14 @@
+POST  http://localhost:3000/main/authenticate HTTP/1.1
+content-type: application/json
+
+{
+    "username": "Kohinoor hospital",
+    "code": 100,
+    "password": "password"
+}
+
+###
+
+GET http://localhost:3000/main/hospital_list HTTP/1.1
+
+###
